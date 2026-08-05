@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sbm4d"
+version = "0.1.0"
+description = "SOOP BANNER MAKER FOR DAMBI"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "Pillow>=10.0",
+]
+
+[project.scripts]
+sbm4d = "sbm4d.cli:main"
+
+[project.gui-scripts]
+sbm4d-gui = "sbm4d.gui:launch_gui"
+
+[tool.setuptools.packages.find]
+include = ["sbm4d*"]

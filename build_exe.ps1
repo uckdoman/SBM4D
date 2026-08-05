@@ -3,9 +3,14 @@ param()
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+$iconPath = Join-Path $projectRoot 'icon.ico'
 
 Push-Location -LiteralPath $projectRoot
 try {
+    if (-not (Test-Path -LiteralPath $iconPath -PathType Leaf)) {
+        throw "앱 아이콘을 찾을 수 없습니다: $iconPath"
+    }
+
     python -c "import PIL, PyInstaller"
     if ($LASTEXITCODE -ne 0) {
         throw '빌드 도구가 없습니다. python -m pip install -r requirements-dev.txt 명령을 먼저 실행해 주세요.'
@@ -17,6 +22,8 @@ try {
         --onefile `
         --windowed `
         --name SBM4D `
+        --icon $iconPath `
+        --add-data "$iconPath;." `
         --exclude-module numpy `
         --distpath dist `
         --workpath build/pyinstaller `
